@@ -19,12 +19,13 @@ namespace Console
 
             container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
             container.Register(typeof(IProvider<>), typeof(Provider<>), Lifestyle.Scoped);
-            container.Register<IWebString, WebString>();
+            container.Register<IWebString, WebString>(Lifestyle.Scoped);
 
 
-            container.RegisterConditional<IElementProvider, WebElementProvider>(c => container.GetCurrentExecutionContextScope() == null);
-            container.RegisterConditional<IElementProvider, ElementProvider>(Lifestyle.Scoped,
-                c => container.GetCurrentExecutionContextScope() != null);
+            //container.RegisterConditional<IElementProvider, WebElementProvider>(c => container.GetCurrentExecutionContextScope() == null);
+            //container.RegisterConditional<IElementProvider, ElementProvider>(Lifestyle.Scoped,
+            //    c => container.GetCurrentExecutionContextScope() != null);
+            container.Register<IElementProvider, ElementProvider>(Lifestyle.Scoped);
             //container.RegisterFunc<IElement, InboxMessage>();
             //container.Register<ILoginService,SALogin>(Lifestyle.Scoped);
 
