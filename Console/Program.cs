@@ -29,6 +29,14 @@ namespace Console
             //container.Register<ILoginService,SALogin>(Lifestyle.Scoped);
 
             container.Verify();
+
+            using (container.BeginExecutionContextScope())
+            {
+                var provider = container.GetInstance<IElementProvider>();
+                provider.Value = new Element();
+                var webString = container.GetInstance<IWebString>();
+                var element = webString.Element;
+            }
         }
     }
 }

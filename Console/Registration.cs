@@ -34,7 +34,7 @@ namespace Lib
         bool CanResolve(InjectionTargetInfo target);
         bool IsResolvable(InjectionTargetInfo target);
         Expression BuildExpression(InjectionConsumerInfo consumer);
-        Expression DefaulExpression();
+        Expression DefaultExpression();
     }
 
     public class UrlConvention : IParameterConvention
@@ -64,9 +64,9 @@ namespace Lib
             return Expression.Constant(consumer.Target.Property.DeclaringType.GetCustomAttribute<UrlAttribute>().Url, typeof(string));
         }
 
-        public Expression DefaulExpression()
+        public Expression DefaultExpression()
         {
-            return Expression.Constant("", typeof(string));
+            return Expression.Constant("Default", typeof(string));
         }
     }
 
@@ -87,7 +87,7 @@ namespace Lib
         {
             return this.convention.CanResolve(consumer.Target)
                 ? this.convention.BuildExpression(consumer)
-                : convention.IsResolvable(consumer.Target) ? convention.DefaulExpression() : this.decoratee.BuildExpression(consumer);
+                : convention.IsResolvable(consumer.Target) ? convention.DefaultExpression() : this.decoratee.BuildExpression(consumer);
         }
 
         //[DebuggerStepThrough]
